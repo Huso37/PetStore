@@ -1,0 +1,30 @@
+<h2>Pridať nové zviera</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Meno</mat-label>
+    <input matInput formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="available">available</mat-option>
+      <mat-option value="pending">pending</mat-option>
+      <mat-option value="sold">sold</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Kategória</mat-label>
+    <input matInput formGroupName="category" formControlName="name" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>URL obrázka</mat-label>
+    <input matInput formArrayName="photoUrls" [formControlName]="0" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Pridať</button>
+</form>

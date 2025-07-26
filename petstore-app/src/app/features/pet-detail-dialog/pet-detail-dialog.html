@@ -1,0 +1,10 @@
+<h2>Detail zvieraťa</h2>
+
+<div *ngIf="pet">
+  <p><strong>ID:</strong> {{ pet.id }}</p>
+  <p><strong>Meno:</strong> {{ pet.name }}</p>
+  <p><strong>Status:</strong> {{ pet.status }}</p>
+  <p><strong>Kategória:</strong> {{ pet.category?.name || '–' }}</p>
+
+  <img *ngIf="pet.photoUrls?.length" [src]="pet.photoUrls[0]" width="120" />
+</div>
