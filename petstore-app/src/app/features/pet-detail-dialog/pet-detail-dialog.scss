@@ -1,12 +1,11 @@
+.custom-container {
+  padding: 10px 30px 10px 30px;
+}
+
 .custom-dialog-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // padding: 0px 15px 0 15px; /* top right bottom left */
-}
-
-.custom-container {
-  padding: 10px 30px 10px 30px;
 }
 
 .custom-close-btn {

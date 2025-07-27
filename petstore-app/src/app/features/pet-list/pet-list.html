@@ -1,7 +1,7 @@
 <h1 class="custom-title">Zoznam zvierat</h1>
 
 <div class="toolbar-row">
-    <mat-form-field appearance="fill" class="custom-select">
+    <mat-form-field appearance="fill">
         <mat-label>Status</mat-label>
         <mat-select [value]="selectedStatus()" (valueChange)="selectedStatus.set($event)">
             <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
@@ -14,44 +14,43 @@
     </button>
 </div>
 
-<div class="table-wrapper">
-    <table mat-table [dataSource]="pets()" class="mat-elevation-z2 custom-table">
 
-        <!-- ID -->
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef class="custom-table-header">ID</th>
-            <td mat-cell *matCellDef="let pet">{{ pet.id }}</td>
-        </ng-container>
+<table mat-table [dataSource]="pets()" class="mat-elevation-z2">
 
-        <!-- Name -->
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef class="custom-table-header">Meno</th>
-            <td mat-cell *matCellDef="let pet">{{ pet.name }}</td>
-        </ng-container>
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let pet">{{ pet.id }}</td>
+    </ng-container>
 
-        <!-- Status -->
-        <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef class="custom-table-header">Status</th>
-            <td mat-cell *matCellDef="let pet">{{ pet.status }}</td>
-        </ng-container>
+    <!-- Name -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Meno</th>
+        <td mat-cell *matCellDef="let pet">{{ pet.name }}</td>
+    </ng-container>
 
-        <!-- Category -->
-        <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef class="custom-table-header">Kategória</th>
-            <td mat-cell *matCellDef="let pet">{{ pet.category?.name || '-' }}</td>
-        </ng-container>
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let pet">{{ pet.status }}</td>
+    </ng-container>
 
-        <!-- Photo -->
-        <ng-container matColumnDef="photo">
-            <th mat-header-cell *matHeaderCellDef class="custom-table-header">Obrázok</th>
-            <td mat-cell *matCellDef="let pet">
-                <img *ngIf="pet.photoUrls?.length" [src]="pet.photoUrls[0]" width="60" height="40" />
-            </td>
-        </ng-container>
+    <!-- Category -->
+    <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Kategória</th>
+        <td mat-cell *matCellDef="let pet">{{ pet.category?.name || '-' }}</td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="openDetailDialog(row.id)" style="cursor: pointer;">
-        </tr>
-    </table>
-</div>
+    <!-- Photo -->
+    <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef>Obrázok</th>
+        <td mat-cell *matCellDef="let pet">
+            <img *ngIf="pet.photoUrls?.length" [src]="pet.photoUrls[0]" width="60" height="40" />
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+    (click)="openDetailDialog(row.id)" style="cursor: pointer;">
+    </tr>
+</table>

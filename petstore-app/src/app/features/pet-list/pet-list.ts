@@ -7,7 +7,6 @@ import { PetDetailDialogComponent } from '../pet-detail-dialog/pet-detail-dialog
 
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
-import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddPetComponent } from '../add-pet/add-pet';
 import { MatIcon } from '@angular/material/icon';
@@ -20,7 +19,6 @@ import { MatIcon } from '@angular/material/icon';
     CommonModule,
     MatSelectModule,
     MatTableModule,
-    MatCardModule,
     MatDialogModule,
     MatIcon
   ],
