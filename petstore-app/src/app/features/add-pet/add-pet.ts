@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 import { PetService } from '../../generated/api/pet.service';
-import { Router } from '@angular/router';
-import { Pet } from '../../generated/model/pet';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-add-pet',
@@ -19,47 +19,63 @@ import { Pet } from '../../generated/model/pet';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIcon
   ],
   templateUrl: './add-pet.html',
   styleUrl: './add-pet.scss'
 })
 
 export class AddPetComponent {
+  
+  categories = [
+    { id: 1, name: 'Dog' },
+    { id: 2, name: 'Cat' },
+    { id: 3, name: 'Fish' },
+    { id: 4, name: 'Bird' }
+  ];
+
   private fb = inject(FormBuilder);
   private petService = inject(PetService);
-  private router = inject(Router);
+  
+  constructor(
+    public dialogRef: MatDialogRef<AddPetComponent>
+  ){}
 
-  form = this.fb.group({
-    name: ['', Validators.required],
-    status: ['available', Validators.required],
-    category: this.fb.group({
-      id: [0],
-      name: ['']
-    }),
-    photoUrls: this.fb.array([this.fb.control('')])
+  AddForm = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(4)]],
+    category: [null, Validators.required],
+    photoUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+$/)]]
   });
 
   onSubmit() {
-  if (this.form.valid) {
-    const raw = this.form.getRawValue();
+    if (this.AddForm.valid) {
+      let petData: any;
+      petData = this.AddForm.getRawValue();
 
-    const payload: Pet = {
-      id: 0, // alebo necháš backend určiť
-      name: raw.name || '',
-      status: raw.status as 'available' | 'pending' | 'sold',
-      category: {
-        id: raw.category?.id ?? undefined,    // konverzia null → undefined
-        name: raw.category?.name ?? undefined
+      petData.id = this.generateId();
+      petData.photoUrls = [petData.photoUrl ?? ''];
+      petData.status = 'available';
+      delete petData.photoUrl;
+
+      this.petService.addPet(petData).subscribe({
+        next: (addedPet) => {
+          console.log('Pet added:', addedPet);
+          this.dialogRef.close(addedPet);
         },
-      photoUrls: raw.photoUrls?.filter(Boolean) as string[],
-      tags: [] // voliteľné, alebo prázdne
-    };
-
-    this.petService.addPet(payload).subscribe({
-      next: () => this.router.navigate(['/pets']),
-      error: (err) => console.error('Chyba pri pridávaní:', err)
-    });
+        error: (err) => {
+          console.error('Error adding pet:', err);
+        }
+      });
+      console.log('Pet to add:', petData);
+    }
   }
-}
+
+  generateId(): number {
+    return Math.floor(Math.random() * 1000000);
+  }
+
+  onCancel(): void {
+    this.dialogRef.close();
+  }
 }

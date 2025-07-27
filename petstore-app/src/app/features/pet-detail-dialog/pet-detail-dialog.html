@@ -1,10 +1,17 @@
-<h2>Detail zvieraťa</h2>
+<div class="custom-container">  
+  <div class="custom-dialog-header">
+      <h2>Detail zvieraťa</h2>
+      <button mat-icon-button (click)="onCancel()" class="custom-close-btn">
+          <mat-icon>close</mat-icon>
+      </button>
+  </div>
 
-<div *ngIf="pet">
-  <p><strong>ID:</strong> {{ pet.id }}</p>
-  <p><strong>Meno:</strong> {{ pet.name }}</p>
-  <p><strong>Status:</strong> {{ pet.status }}</p>
-  <p><strong>Kategória:</strong> {{ pet.category?.name || '–' }}</p>
+  <div *ngIf="pet">
+    <p><strong>ID:</strong> {{ pet.id }} </p>
+    <p><strong>Meno:</strong> {{ pet.name }} </p>
+    <p><strong>Status:</strong> {{ pet.status }} </p>
+    <p><strong>Kategória:</strong> {{ pet.category?.name || '–' }} </p>
 
-  <img *ngIf="pet.photoUrls?.length" [src]="pet.photoUrls[0]" width="120" />
+    <img *ngIf="pet.photoUrls?.length" [src]="pet.photoUrls[0]" width="300" />
+  </div>
 </div>

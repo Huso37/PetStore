@@ -1,0 +1,27 @@
+.custom-title {
+    padding-left: 16px;
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+}
+
+.custom-select {
+  padding-left: 16px;
+}
+
+.custom-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 8px 8px 8px;;
+    color: white;
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}

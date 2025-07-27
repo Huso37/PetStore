@@ -1,30 +1,51 @@
-<h2>Pridať nové zviera</h2>
+<div class="custom-container">   
+    <div class="custom-dialog-header">
+        <h2>Pridať zviera</h2>
+        <button mat-icon-button (click)="onCancel()" class="close-btn">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="AddForm" (ngSubmit)="onSubmit()" class="dialog-form">
+        <div class="row">
+            <mat-form-field appearance="fill">
+                <mat-label>Zadajte meno</mat-label>
+                <input 
+                    matInput 
+                    formControlName="name"
+                    required
+                />
+                <mat-error *ngIf="AddForm.controls['name'].hasError('required') && AddForm.controls['name'].touched">
+                    Musíte zadať meno!
+                </mat-error>
+                <mat-error *ngIf="AddForm.controls['name'].hasError('minlength') && AddForm.controls['name'].touched">
+                    Meno musí obsahovať minimálne 4 znaky!
+                </mat-error>
+            </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Meno</mat-label>
-    <input matInput formControlName="name" />
-  </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Vyberte kategóriu</mat-label>
+                <mat-select formControlName="category" required>
+                    <mat-option *ngFor="let cat of categories" [value]="cat">
+                    {{ cat.name }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="AddForm.controls['category'].hasError('required') && AddForm.controls['category'].touched">
+                    Musíte vybrať kategóriu
+                </mat-error>
+            </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Status</mat-label>
-    <mat-select formControlName="status">
-      <mat-option value="available">available</mat-option>
-      <mat-option value="pending">pending</mat-option>
-      <mat-option value="sold">sold</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Kategória</mat-label>
-    <input matInput formGroupName="category" formControlName="name" />
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>URL obrázka</mat-label>
-    <input matInput formArrayName="photoUrls" [formControlName]="0" />
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" type="submit">Pridať</button>
-</form>
+            <mat-form-field appearance="fill">
+                <mat-label>URL fotky</mat-label>
+                <input matInput formControlName="photoUrl"/>
+                <mat-error *ngIf="AddForm.controls['photoUrl'].hasError('required') && AddForm.controls['photoUrl'].touched">
+                    Musíte zadať URL
+                </mat-error>
+                <mat-error *ngIf="AddForm.controls['photoUrl'].hasError('pattern') && AddForm.controls['photoUrl'].touched">
+                    URL musí začínať na http:// alebo https://
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="AddForm.invalid" class="submit-button">Pridať domáce zvieratko</button>
+    </form>
+</div>
